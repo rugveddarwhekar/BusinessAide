@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "482081687338",
+    "firebase_url": "https://businessaide-1d10f.firebaseio.com",
+    "project_id": "businessaide-1d10f",
+    "storage_bucket": "businessaide-1d10f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:482081687338:android:dae0cc50f3d4b5c0",
+        "android_client_info": {
+          "package_name": "com.businessaide.businessaide"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "482081687338-okgnn1dkdsdi09io1g7nmc8aadqjuir8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.businessaide.businessaide",
+            "certificate_hash": "bdf7be73c054f916b02704f96be284b176b19559"
+          }
+        },
+        {
+          "client_id": "482081687338-8k5ibf1kd62mhc8ttr633spvvdu3p6md.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwnij1AVvQNF5st7dU4a4MnPAtyBqL_8c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "482081687338-8k5ibf1kd62mhc8ttr633spvvdu3p6md.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
