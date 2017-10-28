@@ -58,6 +58,7 @@
         android:layout_below="@+id/password"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:background="@drawable/login_button" />
+        android:background="@drawable/login_button"
+        android:onClick="onLogin" />
 
 </android.widget.RelativeLayout>
