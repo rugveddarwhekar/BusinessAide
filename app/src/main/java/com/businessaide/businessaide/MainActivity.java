@@ -48,10 +48,6 @@ public class MainActivity extends AppCompatActivity {
     String user;
     JSONArray name = null;
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
