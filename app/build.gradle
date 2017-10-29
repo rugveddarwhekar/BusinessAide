@@ -3,6 +3,8 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
+    useLibrary 'org.apache.http.legacy'
+
     defaultConfig {
         applicationId "com.businessaide.businessaide"
         minSdkVersion 21
@@ -27,5 +29,6 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile 'com.android.volley:volley:1.0.0'
 }
 apply plugin: 'com.google.gms.google-services'

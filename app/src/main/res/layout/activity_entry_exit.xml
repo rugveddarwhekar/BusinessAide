@@ -13,12 +13,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Hello, User"
         android:textAlignment="center"
         android:textColor="#fff"
-        android:textSize="24sp" />
+        android:textSize="32sp" />
 
     <Button
         android:id="@+id/btn_entry"
@@ -41,7 +41,7 @@
         android:elevation="8dp"
         android:onClick="onExitClicked"
         android:layout_below="@+id/btn_entry"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="20dp" />
 
     <Button
         android:id="@+id/btn_data"
@@ -52,7 +52,7 @@
         android:elevation="8dp"
         android:layout_width="290dp"
         android:layout_below="@+id/btn_exit"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="20dp" />
 
 
 </RelativeLayout>
