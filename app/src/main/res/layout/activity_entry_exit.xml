@@ -7,13 +7,29 @@
     android:layout_height="match_parent"
     tools:context="com.businessaide.businessaide.EntryExitActivity">
 
+    <TextView
+        android:id="@+id/welcomeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="27dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Hello, User"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="24sp" />
+
     <Button
         android:id="@+id/btn_entry"
         android:background="@drawable/entry_button"
+        android:layout_below="@+id/welcomeText"
         android:layout_centerHorizontal="true"
         android:layout_height="170dp"
+        android:elevation="8dp"
         android:layout_width="290dp"
-        android:layout_marginTop="98dp" />
+        android:onClick="onEntryClicked"
+        android:layout_marginTop="18dp" />
 
 
     <Button
@@ -22,6 +38,8 @@
         android:layout_centerHorizontal="true"
         android:layout_height="170dp"
         android:layout_width="290dp"
+        android:elevation="8dp"
+        android:onClick="onExitClicked"
         android:layout_below="@+id/btn_entry"
         android:layout_marginTop="30dp" />
 
@@ -30,7 +48,11 @@
         android:background="@drawable/data_button"
         android:layout_centerHorizontal="true"
         android:layout_height="70dp"
+        android:onClick="onDataClicked"
+        android:elevation="8dp"
         android:layout_width="290dp"
         android:layout_below="@+id/btn_exit"
         android:layout_marginTop="30dp" />
+
+
 </RelativeLayout>
