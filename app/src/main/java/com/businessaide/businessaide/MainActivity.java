@@ -59,6 +59,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         UsernameEt = findViewById(R.id.username);
         PasswordEt = findViewById(R.id.password);
+
+        Toast.makeText(this, "saved username = "+SaveSharedPreference.getUserName(MainActivity.this), Toast.LENGTH_SHORT).show();
+
+        if(!(SaveSharedPreference.getUserName(MainActivity.this)==""))
+        {
+            Intent i = new Intent(getApplicationContext(), EntryExitActivity.class);
+            i.putExtra("name_user", SaveSharedPreference.getUserName(MainActivity.this));
+            SaveSharedPreference.setUserName(MainActivity.this, user);
+            startActivity(i);
+            finish();
+        }
     }
 
 //    public class BackgroundWorker extends AsyncTask<String, Void, String> {
@@ -224,6 +235,7 @@ public class MainActivity extends AppCompatActivity {
                                     Log.i("error_response", result);
                                     Intent i = new Intent(getApplicationContext(), EntryExitActivity.class);
                                     i.putExtra("name_user", user);
+                                    SaveSharedPreference.setUserName(MainActivity.this, user);
                                     startActivity(i);
                                     //Toast.makeText(getApplicationContext(), "Welcome "+user, Toast.LENGTH_SHORT).show();
                                     finish();
@@ -262,10 +274,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("e", "onLogin: Exception");
             }
 //
-//        String type = "login";
-//        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
-//        backgroundWorker.execute(type, username, password);
-
 
         }
 
