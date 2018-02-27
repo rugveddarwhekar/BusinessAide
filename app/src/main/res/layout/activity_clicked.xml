@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#673ab7"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.businessaide.businessaide.ClickedActivity">
+
+    <TextView
+        android:id="@+id/typeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="54dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Entry/Exit"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/dateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/typeText"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="1st Jan, 2018"
+        android:textAlignment="center"
+        android:textColor="#ffffff"
+        android:textSize="28sp" />
+
+    <TextView
+        android:id="@+id/timeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dateText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="1dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="10:00:02 am"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="28sp" />
+
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="#ffffff"
+        android:text="Click to Scan QR Code"
+        android:fontFamily="@font/montserrat_bold"
+        android:textSize="28sp"
+        android:textColor="#673ab7"
+        android:layout_below="@+id/timeText"
+        android:layout_marginTop="75dp"
+        android:elevation="8dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/qrScanButton"
+        android:onClick="onQRscanClicked"
+        tools:ignore="OnClick" />
+
+</RelativeLayout>

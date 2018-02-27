@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#673ab7"
+    tools:context="com.businessaide.businessaide.SendDataActivity">
+
+    <EditText
+        android:id="@+id/dataText"
+        style="@android:style/Widget.DeviceDefault.EditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:fontFamily="@font/montserrat"
+        android:hint="Enter text to send"
+        android:inputType="textMultiLine"
+        android:textColor="#fff"
+        android:textColorHighlight="@color/colorAccent"
+        android:textColorHint="@color/common_action_bar_splitter" />
+
+    <Button
+        android:id="@+id/textSendButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dataText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="19dp"
+        android:text="Send Text" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Send Data"
+        android:textColor="#fff"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/textSendButton"
+        android:layout_marginBottom="147dp"
+        android:text="Button" />
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package com.businessaide.businessaide;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -43,14 +44,20 @@ public class EntryExitActivity extends AppCompatActivity {
     }
     public void onEntryClicked(View view){
         Log.d("entry", "onEntryClicked: Clicked");
+        Intent i = new Intent(this, ClickedActivity.class);
+        i.putExtra("clickedButton", "Entry");
+        startActivity(i);
     }
 
     public void onExitClicked(View view){
         Log.d("exit", "onExitClicked: Clicked");
+        Intent i = new Intent(this, ClickedActivity.class);
+        i.putExtra("clickedButton", "Exit");
+        startActivity(i);
     }
 
     public void onDataClicked(View view){
         Log.d("data", "onDataClicked: Clicked");
-
+        //startActivity(new Intent(this, SendDataActivity.class));
     }
 }

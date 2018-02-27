@@ -2,8 +2,13 @@ package com.businessaide.businessaide;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -146,78 +151,131 @@ public class MainActivity extends AppCompatActivity {
         username = UsernameEt.getText().toString();
         password = PasswordEt.getText().toString();
 
-        try {
-            StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                    "http://businessaide.co.in/login.php",
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String result) {
-                            if (!(result.equals("0"))) {
+        if (!isNetworkAvailable()) {
+            Log.e("PV", "not connected");
+            AlertDialog.Builder builder;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                builder = new AlertDialog.Builder(MainActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+            } else {
+                builder = new AlertDialog.Builder(MainActivity.this);
+            }
+            builder.setTitle("No Internet!")
+                    .setMessage("Internet is a necessity!")
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent i = new Intent(Settings.ACTION_SETTINGS);
+                            // i.setClassName("com.android.phone","com.android.phone.NetworkSetting");
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(i);
+                            finish();
+                        }
+                    })
+//                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            // do nothing
+//                        }
+//                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+//            new AlertDialog(this, SweetAlertDialog.CUSTOM_IMAGE_TYPE)
+//                    .setTitleText("No Internet")
+//                    .setContentText("Let's fix the satellites !")
+//                    .setCustomImage(R.drawable.no_internet)
+//                    .setConfirmText("FIX")
+//                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                        @Override
+//                        public void onClick(SweetAlertDialog sDialog) {
+//
+//                            Intent i = new Intent(Settings.ACTION_SETTINGS);
+//                            // i.setClassName("com.android.phone","com.android.phone.NetworkSetting");
+//                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                            startActivity(i);
+//                            finish();
+//
+//                        }
+//                    })
+//                    .show();
 
-                                try {
-                                    jbo = new JSONObject(result);
-                                    name = jbo.getJSONArray("result");
-                                    for(int i =0; i<name.length(); i++)
-                                    {
-                                        JSONObject c = name.getJSONObject(i);
-                                        user = c.getString("name");
+        } else {
 
+            try {
+                StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                        "http://businessaide.co.in/login.php",
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String result) {
+                                if (!(result.equals("0"))) {
+
+                                    try {
+                                        jbo = new JSONObject(result);
+                                        name = jbo.getJSONArray("result");
+                                        for (int i = 0; i < name.length(); i++) {
+                                            JSONObject c = name.getJSONObject(i);
+                                            user = c.getString("name");
+
+                                        }
+
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
                                     }
 
 
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                                    Log.i("error_response", result);
+                                    Intent i = new Intent(getApplicationContext(), EntryExitActivity.class);
+                                    i.putExtra("name_user", user);
+                                    startActivity(i);
+                                    //Toast.makeText(getApplicationContext(), "Welcome "+user, Toast.LENGTH_SHORT).show();
+                                    finish();
+                                } else if (result.equals("0")) {
+
+                                    // Log.i("error", "flag set "+result+"flag"+flag);
+                                    Toast.makeText(getApplicationContext(), "Incorrect credentials", Toast.LENGTH_SHORT).show();
                                 }
-
-
-
-
-                                Log.i("error_response", result);
-                                Intent i = new Intent(getApplicationContext(), EntryExitActivity.class);
-                                i.putExtra("name_user", user);
-                                startActivity(i);
-                                //Toast.makeText(getApplicationContext(), "Welcome "+user, Toast.LENGTH_SHORT).show();
-                                finish();
-                            } else if (result.equals("0")) {
-
-                                // Log.i("error", "flag set "+result+"flag"+flag);
-                                Toast.makeText(getApplicationContext(), "Incorrect credentials", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
 
-                        }
-                    }) {
-                public static final String TAG = "PV";
-
-
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-
-                    Map<String, String> params = new HashMap<>();
-                    params.put("user_name", username);
-                    params.put("password", password);
-                    return params;
-                }
+                            }
+                        }) {
+                    public static final String TAG = "PV";
 
 
-            };
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
 
-            RequestQueue requestQueue = Volley.newRequestQueue(this);
-            requestQueue.add(stringRequest);
-        }catch(Exception e){
-            Log.d("e", "onLogin: Exception");
-        }
+                        Map<String, String> params = new HashMap<>();
+                        params.put("user_name", username);
+                        params.put("password", password);
+                        return params;
+                    }
+
+
+                };
+
+                RequestQueue requestQueue = Volley.newRequestQueue(this);
+                requestQueue.add(stringRequest);
+            } catch (Exception e) {
+                Log.d("e", "onLogin: Exception");
+            }
 //
 //        String type = "login";
 //        BackgroundWorker backgroundWorker = new BackgroundWorker(this);
 //        backgroundWorker.execute(type, username, password);
 
 
+        }
+
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
 }
