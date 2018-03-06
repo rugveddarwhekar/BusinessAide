@@ -9,6 +9,17 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class EntryExitActivity extends AppCompatActivity {
 
     boolean doubleBackToExitPressedOnce = false;
@@ -56,8 +67,39 @@ public class EntryExitActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    public void onDataClicked(View view){
-        Log.d("data", "onDataClicked: Clicked");
-        //startActivity(new Intent(this, SendDataActivity.class));
+
+    public void sendtext(View v)
+    {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                "http://businessaide.co.in/tp.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(EntryExitActivity.this, "Respo : "+response, Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(EntryExitActivity.this,error.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+            public static final String TAG = "PV";
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+
+                Map<String,String> params = new HashMap<>();
+                params.put("string", "data gela");
+
+                return params;
+            }
+
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
+
 }
+

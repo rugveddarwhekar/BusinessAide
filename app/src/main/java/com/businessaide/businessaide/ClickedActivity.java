@@ -8,11 +8,20 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.zxing.Result;
 import com.google.zxing.client.android.Intents;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -93,6 +102,9 @@ public class ClickedActivity extends AppCompatActivity implements ZXingScannerVi
 
         Toast.makeText(this, "result : "+ rawResult.getText().toString(), Toast.LENGTH_SHORT).show();
 
+
+        sendData(rawResult.getText().toString());
+
         //MainActivity.tvresult.setText(rawResult.getText());
         onBackPressed();
 
@@ -111,7 +123,48 @@ public class ClickedActivity extends AppCompatActivity implements ZXingScannerVi
 //        dateText.setText(formattedDate);
 //        timeText.setText(formattedDate1);
 //        typeText.setText(type_text);
+
+
+    public void sendData(final String input)
+    {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                "http://businessaide.co.in/tp.php",
+            new Response.Listener<String>() {
+        @Override
+        public void onResponse(String response) {
+            Toast.makeText(ClickedActivity.this, "Respo : "+response, Toast.LENGTH_SHORT).show();
+        }
+    },
+        new Response.ErrorListener(){
+        @Override
+        public void onErrorResponse(VolleyError error) {
+        Toast.makeText(ClickedActivity.this,error.getMessage(),Toast.LENGTH_LONG).show();
+        }
+        }){
+        public static final String TAG = "PV";
+        @Override
+        protected Map<String, String> getParams() throws AuthFailureError {
+
+        Map<String,String> params = new HashMap<>();
+        params.put("string", input);
+
+
+        return params;
+}
+
+
+};
+
+RequestQueue requestQueue = Volley.newRequestQueue(this);
+requestQueue.add(stringRequest);
     }
+
+
+
+    }
+
+
+
 
 
 //    private void updateTextView() {
