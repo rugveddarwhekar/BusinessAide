@@ -38,9 +38,11 @@ public class ClickedActivity extends AppCompatActivity implements ZXingScannerVi
         final TextView dateText = findViewById(R.id.dateText);
         final TextView timeText = findViewById(R.id.timeText);
         TextView typeText = findViewById(R.id.typeText);
-
         String type_text = getIntent().getExtras().getString("clickedButton");
-      //  typeText.setText(type_text);
+
+        System.out.println(typeText);
+        typeText.setText(type_text);
+
         Thread t = new Thread() {
 
             @Override
@@ -62,6 +64,9 @@ public class ClickedActivity extends AppCompatActivity implements ZXingScannerVi
                                 dateText.setText(formattedDate);
                                 timeText.setText(formattedDate1);
                                 //updateTextView();
+                                System.out.println(formattedDate);
+                                System.out.println(formattedDate1);
+
                             }
                         });
                     } while (!isInterrupted());
@@ -72,6 +77,7 @@ public class ClickedActivity extends AppCompatActivity implements ZXingScannerVi
 
         t.start();
     }
+
 
     public void onQRscanClicked (View v) {
         mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
@@ -102,11 +108,16 @@ public class ClickedActivity extends AppCompatActivity implements ZXingScannerVi
 
         Toast.makeText(this, "result : "+ rawResult.getText().toString(), Toast.LENGTH_SHORT).show();
 
+        Calendar c1 = Calendar.getInstance();
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat fmt1 = new SimpleDateFormat("HH:mm:ss");
 
-        sendData(rawResult.getText().toString());
+        String formattedDate = fmt.format(c1.getTime());
+        String formattedDate1 = fmt1.format(c1.getTime());
+        sendData(rawResult.getText().toString(), formattedDate, formattedDate1, "entry");
 
         //MainActivity.tvresult.setText(rawResult.getText());
-        onBackPressed();
+        //onBackPressed();
 
         // If you would like to resume scanning, call this method below:
         //mScannerView.resumeCameraPreview(this);
@@ -125,10 +136,10 @@ public class ClickedActivity extends AppCompatActivity implements ZXingScannerVi
 //        typeText.setText(type_text);
 
 
-    public void sendData(final String input)
+    public void sendData(final String input, final String date, final String time, final String type)
     {
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                "http://businessaide.co.in/tp.php",
+                "http://businessaide.co.in/enterData.php",
             new Response.Listener<String>() {
         @Override
         public void onResponse(String response) {
@@ -146,8 +157,7 @@ public class ClickedActivity extends AppCompatActivity implements ZXingScannerVi
         protected Map<String, String> getParams() throws AuthFailureError {
 
         Map<String,String> params = new HashMap<>();
-        params.put("string", input);
-
+        params.put("string", type + "!"+ input + "!" + date + "!" + time);
 
         return params;
 }
@@ -159,13 +169,7 @@ RequestQueue requestQueue = Volley.newRequestQueue(this);
 requestQueue.add(stringRequest);
     }
 
-
-
     }
-
-
-
-
 
 //    private void updateTextView() {
 //

@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         if(!(SaveSharedPreference.getUserName(MainActivity.this)==""))
         {
             Intent i = new Intent(getApplicationContext(), EntryExitActivity.class);
-            i.putExtra("name_user", SaveSharedPreference.getUserName(MainActivity.this));
+            i.putExtra("username", SaveSharedPreference.getUserName(MainActivity.this));
             SaveSharedPreference.setUserName(MainActivity.this, user);
             startActivity(i);
             finish();
