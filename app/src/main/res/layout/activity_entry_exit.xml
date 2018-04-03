@@ -54,5 +54,15 @@
         android:elevation="8dp"
         android:onClick="sendtext" />
 
+    <Button
+        android:id="@+id/logout_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="logoutPressed"
+        android:layout_below="@+id/btn_data"
+        android:text="Logout"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center" />
+
 
 </RelativeLayout>

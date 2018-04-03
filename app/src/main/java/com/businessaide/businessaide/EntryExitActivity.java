@@ -1,7 +1,9 @@
 package com.businessaide.businessaide;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,23 +22,33 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EntryExitActivity extends AppCompatActivity {
 
+public class EntryExitActivity extends AppCompatActivity {
+    SaveSharedPreference session;
     boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+//        session = new SaveSharedPreference(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entry_exit);
 
-        String user_name = getIntent().getExtras().getString("name_user");
+//            //session.checkLogin();
+//
+//            // get user data from session
+//            HashMap<String, String> user = session.getUserDetails();
+//
+//            // name
+//            String name = user.get(SaveSharedPreference.KEY_NAME);
 
-        TextView tv = findViewById(R.id.welcomeText);
-        tv.setText("Hello, "+user_name);
-    }
+            String user_name = getIntent().getExtras().getString("name_user");
 
-    @Override
-    public void onBackPressed() {
+            TextView tv = findViewById(R.id.welcomeText);
+            tv.setText("Hello, " + user_name);
+        }
+
+    public void onBackPressed(){
         if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
             return;
@@ -62,7 +74,7 @@ public class EntryExitActivity extends AppCompatActivity {
 
     public void onExitClicked(View view){
         Log.d("exit", "onExitClicked: Clicked");
-        Intent i = new Intent(this, ClickedActivity.class);
+        Intent i = new Intent(this, ExitClickedActivity.class);
         i.putExtra("clickedButton", "Exit");
         startActivity(i);
     }
@@ -93,13 +105,15 @@ public class EntryExitActivity extends AppCompatActivity {
 
                 return params;
             }
-
-
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
 
+
+    public void logoutPressed(View view){
+        session.logoutUser();
+    }
 }
 

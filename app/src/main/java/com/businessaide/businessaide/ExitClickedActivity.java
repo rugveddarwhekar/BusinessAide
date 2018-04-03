@@ -25,8 +25,7 @@ import java.util.Map;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-
-public class ClickedActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
+public class ExitClickedActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
     java.util.Date noteTS;
     private ZXingScannerView mScannerView;
 
@@ -132,7 +131,7 @@ public class ClickedActivity extends AppCompatActivity implements ZXingScannerVi
 
         String formattedDate = fmt.format(c1.getTime());
         String formattedDate1 = fmt1.format(c1.getTime());
-        sendData(rawResult.getText().toString(), formattedDate, formattedDate1, "entry", get_Lat, get_Long);
+        sendData(rawResult.getText().toString(), formattedDate, formattedDate1, "exit", get_Lat, get_Long);
 
         //MainActivity.tvresult.setText(rawResult.getText());
 //        onBackPressed();
@@ -158,36 +157,36 @@ public class ClickedActivity extends AppCompatActivity implements ZXingScannerVi
     {
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
                 "http://businessaide.co.in/enterData.php",
-            new Response.Listener<String>() {
-        @Override
-        public void onResponse(String response) {
-            Toast.makeText(ClickedActivity.this, "Respo : "+response, Toast.LENGTH_SHORT).show();
-        }
-    },
-        new Response.ErrorListener(){
-        @Override
-        public void onErrorResponse(VolleyError error) {
-        Toast.makeText(ClickedActivity.this,error.getMessage(),Toast.LENGTH_LONG).show();
-        }
-        }){
-        public static final String TAG = "PV";
-        @Override
-        protected Map<String, String> getParams() throws AuthFailureError {
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(ExitClickedActivity.this, "Respo : "+response, Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(ExitClickedActivity.this,error.getMessage(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+            public static final String TAG = "PV";
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
 
-        Map<String,String> params = new HashMap<>();
-        params.put("string", type + "!"+ input + "!" + date + "!" + time + "!" + lat + "," + Long);
+                Map<String,String> params = new HashMap<>();
+                params.put("string", type + "!"+ input + "!" + date + "!" + time + "!" + lat + "," + Long);
 
-        return params;
+                return params;
+            }
+
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
 }
-
-
-};
-
-RequestQueue requestQueue = Volley.newRequestQueue(this);
-requestQueue.add(stringRequest);
-    }
-
-    }
 
 //    private void updateTextView() {
 //
