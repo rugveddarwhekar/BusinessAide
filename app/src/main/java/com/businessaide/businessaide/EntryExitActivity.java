@@ -1,6 +1,8 @@
 package com.businessaide.businessaide;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
@@ -18,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.karan.churi.PermissionManager.PermissionManager;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +36,10 @@ public class EntryExitActivity extends AppCompatActivity {
 //        session = new SaveSharedPreference(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entry_exit);
+
+        PermissionManager permissionManager = new PermissionManager() {};
+        permissionManager.checkAndRequestPermissions(this);
+
 
 //            //session.checkLogin();
 //
@@ -82,34 +89,37 @@ public class EntryExitActivity extends AppCompatActivity {
 
     public void sendtext(View v)
     {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                "http://businessaide.co.in/tp.php",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Toast.makeText(EntryExitActivity.this, "Respo : "+response, Toast.LENGTH_SHORT).show();
-                    }
-                },
-                new Response.ErrorListener(){
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(EntryExitActivity.this,error.getMessage(),Toast.LENGTH_LONG).show();
-                    }
-                }){
-            public static final String TAG = "PV";
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String,String> params = new HashMap<>();
-                params.put("string", "data gela");
-
-                return params;
-            }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+        Intent i = new Intent(this, DataGen.class);
+        startActivity(i);
     }
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+//                "http://businessaide.co.in/tp.php",
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        Toast.makeText(EntryExitActivity.this, "Respo : "+response, Toast.LENGTH_SHORT).show();
+//                    }
+//                },
+//                new Response.ErrorListener(){
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(EntryExitActivity.this,error.getMessage(),Toast.LENGTH_LONG).show();
+//                    }
+//                }){
+//            public static final String TAG = "PV";
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//
+//                Map<String,String> params = new HashMap<>();
+//                params.put("string", "data gela");
+//
+//                return params;
+//            }
+//        };
+//
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//        requestQueue.add(stringRequest);
+//    }
 
 
     public void logoutPressed(View view){

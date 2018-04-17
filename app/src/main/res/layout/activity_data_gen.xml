@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#673ab7"
+    android:layout_height="match_parent"
+    tools:context=".DataGen">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/heading_send_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:text="Send Data"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:textSize="32dp"/>
+
+    <Button
+        android:id="@+id/img_btn"
+        android:layout_width="200sp"
+        android:layout_height="75sp"
+        android:layout_below="@id/heading_send_data"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@android:color/white"
+        android:fontFamily="@font/montserrat_bold"
+        android:onClick="imgBtnClicked"
+        android:text="Click to Send Image"
+        android:textAlignment="center"
+        android:textColor="@color/businessAide_main"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/txt_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:fontFamily="@font/montserrat"
+        android:textColor="#fff"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/img_btn"
+        android:layout_marginTop="100dp"
+        android:inputType="textMultiLine"
+        android:hint="Click here to enter text" />
+
+    <Button
+        android:id="@+id/text_send_btn"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="#fff"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginTop="25dp"
+        android:layout_centerHorizontal="true"
+        android:onClick="txtBtnClicked"
+        android:layout_marginBottom="25dp"
+        android:layout_below="@id/txt_send"
+        android:textColor="@color/businessAide_main"
+        android:fontFamily="@font/montserrat"
+        android:text="Send" />
+
+
+    </RelativeLayout>
+
+
+</ScrollView>

@@ -82,6 +82,7 @@ public class ClickedActivity extends AppCompatActivity implements ZXingScannerVi
 
 
     public void onQRscanClicked (View v) {
+
         mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
         setContentView(mScannerView);
         mScannerView.setResultHandler(this); // Register ourselves as a handler for scan results.

@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -24,7 +25,8 @@
         <activity android:name=".EntryExitActivity" />
         <activity android:name=".ClickedActivity" />
         <activity android:name=".SendDataActivity" />
-        <activity android:name=".ExitClickedActivity"></activity>
+        <activity android:name=".ExitClickedActivity" />
+        <activity android:name=".DataGen"></activity>
     </application>
 
 </manifest>
