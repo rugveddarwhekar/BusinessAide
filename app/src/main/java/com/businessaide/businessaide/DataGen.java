@@ -2,6 +2,7 @@ package com.businessaide.businessaide;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.Manifest;
 import android.content.Intent;
@@ -12,13 +13,16 @@ import android.os.Build;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
@@ -31,10 +35,17 @@ import java.util.Map;
 
 public class DataGen extends AppCompatActivity {
 
+    EditText txt_send;
+    String url_text = "http://businessaide.co.in/sendTxt.php";
+    String user_name;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_gen);
+
+        user_name = getIntent().getExtras().getString("name_user");
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -57,7 +68,37 @@ public class DataGen extends AppCompatActivity {
     }
 
     public void txtBtnClicked(View view) {
+        txt_send = findViewById(R.id.txt_send);
+        final String txtSend = txt_send.getText().toString();
+
+        RequestQueue queue = Volley.newRequestQueue(DataGen.this);
+        StringRequest request = new StringRequest(Request.Method.POST, url_text, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(DataGen.this, "Response: " + response, Toast.LENGTH_SHORT).show();
+                //Log.e("Text Insert Success: " + response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(DataGen.this, "Error: "+ error, Toast.LENGTH_SHORT).show();
+                //Log.e("Error: " + error);
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError{
+                Map<String,String> map = new HashMap<String, String>();
+                map.put("text", txtSend);
+                map.put("name", user_name);
+
+                return map;
+            }
+        };
+        queue.add(request);
+
+        txt_send.setText("");
     }
+
 
 
     @Override
@@ -122,7 +163,7 @@ public class DataGen extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("tags", tags);
+                params.put("tags", user_name);
                 return params;
             }
 

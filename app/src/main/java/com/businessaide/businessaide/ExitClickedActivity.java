@@ -1,4 +1,5 @@
 package com.businessaide.businessaide;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,6 +29,8 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class ExitClickedActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
     java.util.Date noteTS;
     private ZXingScannerView mScannerView;
+
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +80,24 @@ public class ExitClickedActivity extends AppCompatActivity implements ZXingScann
         };
 
         t.start();
+    }
+
+    public void onBackPressed(){
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 
 

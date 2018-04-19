@@ -27,6 +27,7 @@ import java.util.Map;
 
 
 public class EntryExitActivity extends AppCompatActivity {
+    String user_name;
     SaveSharedPreference session;
     boolean doubleBackToExitPressedOnce = false;
 
@@ -49,7 +50,7 @@ public class EntryExitActivity extends AppCompatActivity {
 //            // name
 //            String name = user.get(SaveSharedPreference.KEY_NAME);
 
-            String user_name = getIntent().getExtras().getString("name_user");
+        user_name = getIntent().getExtras().getString("name_user");
 
             TextView tv = findViewById(R.id.welcomeText);
             tv.setText("Hello, " + user_name);
@@ -90,6 +91,7 @@ public class EntryExitActivity extends AppCompatActivity {
     public void sendtext(View v)
     {
         Intent i = new Intent(this, DataGen.class);
+        i.putExtra("name_user", user_name);
         startActivity(i);
     }
 //        StringRequest stringRequest = new StringRequest(Request.Method.POST,
@@ -122,8 +124,8 @@ public class EntryExitActivity extends AppCompatActivity {
 //    }
 
 
-    public void logoutPressed(View view){
-        session.logoutUser();
-    }
+//    public void logoutPressed(View view){
+//        session.logoutUser();
+//    }
 }
 
