@@ -30,7 +30,7 @@ public class ExitClickedActivity extends AppCompatActivity implements ZXingScann
     java.util.Date noteTS;
     private ZXingScannerView mScannerView;
 
-    boolean doubleBackToExitPressedOnce = false;
+    //boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +44,6 @@ public class ExitClickedActivity extends AppCompatActivity implements ZXingScann
 
         System.out.println(typeText);
         typeText.setText(type_text);
-
-
 
         Thread t = new Thread() {
 
@@ -81,25 +79,6 @@ public class ExitClickedActivity extends AppCompatActivity implements ZXingScann
 
         t.start();
     }
-
-    public void onBackPressed(){
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
-        }
-
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please again to exit", Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce=false;
-            }
-        }, 2000);
-    }
-
 
     public void onQRscanClicked (View v) {
         mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view

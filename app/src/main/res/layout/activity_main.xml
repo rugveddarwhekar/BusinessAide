@@ -61,4 +61,19 @@
         android:background="@drawable/login_button"
         android:onClick="onLogin" />
 
+    <TextView
+        android:id="@+id/signup_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/montserrat"
+        android:onClick="onSignup"
+        android:text="Don't have an account? Sign Up!"
+        android:textAlignment="center"
+        android:textColor="#ccff33"
+        android:textColorHint="#d8d8d8"
+        android:textSize="20dp" />
+
 </android.widget.RelativeLayout>

@@ -34,6 +34,8 @@ dependencies {
     implementation 'me.dm7.barcodescanner:zxing:1.8.4'
     implementation 'com.android.volley:volley:1.0.0'
     compile 'com.github.karanchuri:PermissionManager:0.1.0'
+    compile 'com.google.android.gms:play-services:9.0.2'
+
 //    compile 'com.google.android.gms:play-services-location:10.0.1'
 }
 

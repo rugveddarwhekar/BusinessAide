@@ -26,7 +26,8 @@
         <activity android:name=".ClickedActivity" />
         <activity android:name=".SendDataActivity" />
         <activity android:name=".ExitClickedActivity" />
-        <activity android:name=".DataGen"></activity>
+        <activity android:name=".DataGen" />
+        <activity android:name=".Signup"></activity>
     </application>
 
 </manifest>

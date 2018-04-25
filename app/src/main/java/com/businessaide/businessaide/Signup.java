@@ -6,28 +6,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Build;
+import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -42,138 +28,50 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.HashMap;
+import java.util.Map;
 
-    EditText UsernameEt, PasswordEt;
+public class Signup extends AppCompatActivity {
+
+    EditText UsernameEt, PasswordEt, NameEt, EmailEt, PhoneEt;
     String flag ="0";
-    String username;
-    String password;
+    String username, password, name, email, phone;
 
     JSONObject jbo;
     String user;
-    JSONArray name = null;
+    JSONArray name1 = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        UsernameEt = findViewById(R.id.username);
-        PasswordEt = findViewById(R.id.password);
-
-//        Toast.makeText(this, "saved username = "+SaveSharedPreference.getUserName(MainActivity.this), Toast.LENGTH_SHORT).show();
-//
-//        if(!(SaveSharedPreference.getUserName(MainActivity.this)==""))
-//        {
-//            Intent i = new Intent(getApplicationContext(), EntryExitActivity.class);
-//            i.putExtra("username", SaveSharedPreference.getUserName(MainActivity.this));
-//            SaveSharedPreference.setUserName(MainActivity.this, user);
-//            startActivity(i);
-//            finish();
-//        }
+        setContentView(R.layout.activity_signup);
     }
 
-//    public class BackgroundWorker extends AsyncTask<String, Void, String> {
-//        Context context;
-//        AlertDialog alertDialog;
-//
-//        BackgroundWorker(Context ctx) {
-//            context = ctx;
-//        }
-//
-//        @Override
-//        protected String doInBackground(String... params) {
-//            String type = params[0];
-//            String login_url = "http://businessaide.co.in/login.php";
-//            if (type.equals("login")) {
-//                try {
-//                    String user_name = params[1];
-//                    String password = params[2];
-//                    URL url = new URL(login_url);
-//                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-//                    httpURLConnection.setRequestMethod("POST");
-//                    httpURLConnection.setDoOutput(true);
-//                    httpURLConnection.setDoInput(true);
-//                    OutputStream outputStream = httpURLConnection.getOutputStream();
-//                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-//                    String post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8") + "&"
-//                            + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password, "UTF-8");
-//                    bufferedWriter.write(post_data);
-//                    bufferedWriter.flush();
-//                    bufferedWriter.close();
-//                    outputStream.close();
-//                    InputStream inputStream = httpURLConnection.getInputStream();
-//                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
-//                    String result = "";
-//                    String line = "";
-//                    while ((line = bufferedReader.readLine()) != null) {
-//                        result += line;
-//                    }
-//                    bufferedReader.close();
-//                    inputStream.close();
-//                    httpURLConnection.disconnect();
-//                    return result;
-//                } catch (MalformedURLException e) {
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPreExecute() {
-//            alertDialog = new AlertDialog.Builder(context).create();
-//            alertDialog.setTitle("Login Status");
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String result) {
-//
-//
-//
-//            if(result.equals("1"))
-//            {
-//
-//               // Log.i("error", "flag set "+result+"flag"+flag);
-//                Intent i = new Intent(getApplicationContext(), EntryExitActivity.class);
-//                startActivity(i);
-//                Toast.makeText(context, "Welcome", Toast.LENGTH_SHORT).show();
-//                finish();
-//            }
-//            else if(result.equals("0"))
-//            {
-//
-//               // Log.i("error", "flag set "+result+"flag"+flag);
-//                Toast.makeText(context, "Incorrect credentials", Toast.LENGTH_SHORT).show();
-//            }
-//
-//        }
-//
-//        @Override
-//        protected void onProgressUpdate(Void... values) {
-//            super.onProgressUpdate(values);
-//        }
-//    }
-
-    public void onSignup(View view){
-        Intent i = new Intent(this, Signup.class);
+    public void onLoginClick(View view){
+        Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
 
-    public void onLogin(View view) {
+    public void onSignupClicked(View view) {
+        NameEt = findViewById(R.id.name);
+        EmailEt = findViewById(R.id.email);
+        PhoneEt = findViewById(R.id.phone);
         UsernameEt = findViewById(R.id.username);
         PasswordEt = findViewById(R.id.password);
         username = UsernameEt.getText().toString();
         password = PasswordEt.getText().toString();
+        name = NameEt.getText().toString();
+        email = EmailEt.getText().toString();
+        phone = PhoneEt.getText().toString();
 
         if (!isNetworkAvailable()) {
             Log.e("PV", "not connected");
             AlertDialog.Builder builder;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                builder = new AlertDialog.Builder(MainActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+                builder = new AlertDialog.Builder(Signup.this, android.R.style.Theme_Material_Dialog_Alert);
             } else {
-                builder = new AlertDialog.Builder(MainActivity.this);
+                builder = new AlertDialog.Builder(Signup.this);
             }
             builder.setTitle("No Internet!")
                     .setMessage("Internet is a necessity!")
@@ -216,21 +114,20 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                        "http://businessaide.co.in/login.php",
+                        "http://businessaide.co.in/signup.php",
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String result) {
+
                                 if (!(result.equals("0"))) {
 
                                     try {
                                         jbo = new JSONObject(result);
-                                        name = jbo.getJSONArray("result");
+                                        name1 = jbo.getJSONArray("result");
                                         for (int i = 0; i < name.length(); i++) {
-                                            JSONObject c = name.getJSONObject(i);
+                                            JSONObject c = name1.getJSONObject(i);
                                             user = c.getString("name");
-
                                         }
-
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -238,8 +135,10 @@ public class MainActivity extends AppCompatActivity {
 
 
                                     Log.i("error_response", result);
-                                    Intent i = new Intent(getApplicationContext(), EntryExitActivity.class);
-                                    i.putExtra("name_user", user);
+
+                                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+//                                    i.putExtra("name_user", user);
+                                    Toast.makeText(getApplicationContext(), "Signup Success", Toast.LENGTH_SHORT).show();
                                     //SaveSharedPreference.setUserName(MainActivity.this, user);
                                     startActivity(i);
                                     //Toast.makeText(getApplicationContext(), "Welcome "+user, Toast.LENGTH_SHORT).show();
@@ -265,8 +164,11 @@ public class MainActivity extends AppCompatActivity {
                     protected Map<String, String> getParams() throws AuthFailureError {
 
                         Map<String, String> params = new HashMap<>();
-                        params.put("user_name", username);
-                        params.put("password", password);
+                        params.put("fullname1", name);
+                        params.put("email1", email);
+                        params.put("phone1", phone);
+                        params.put("user_name1", username);
+                        params.put("password1", password);
                         return params;
                     }
 
@@ -290,5 +192,4 @@ public class MainActivity extends AppCompatActivity {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
-
 }

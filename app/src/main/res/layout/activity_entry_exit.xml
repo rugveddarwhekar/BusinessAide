@@ -19,6 +19,12 @@
         android:textAlignment="center"
         android:textColor="#fff"
         android:textSize="32sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GPS Status"
+        android:id="@+id/gps_status"
+        android:visibility="invisible"/>
 
     <Button
         android:id="@+id/btn_entry"
